@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class StringCalculator {
 	public static void main(String[] args) {
 		try {
-		System.out.println(Add("//;\n1;3,-2"));
+		System.out.println(Add("//;\n1;-3,-2"));
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -22,17 +22,24 @@ public class StringCalculator {
 			String delimiter=delimiter_temp.concat("|\\n|,");
 			String new_str=numbers.substring(numbers.indexOf("\n")+1);
 			List<String> arr=List.of(new_str.split(delimiter));
+			
 			List<Integer> nums=arr.stream()
 			   .map(a->Integer.parseInt(a))
 			   .collect(Collectors.toList());
-			for(int i:nums) {
-				if(i<0) {
-				String s="negatives not allowed!";
-				s=s.concat(" "+String.valueOf(i));
-				throw new NegativeNumberException(s);
+			
+			List<Integer> negNums=nums.stream()
+									  .filter(p->p<0)
+									  .collect(Collectors.toList());
+			if(negNums.size()>0) {
+				StringBuilder s=new StringBuilder("negatives not allowed!");
+				for(int n:negNums) {
+					s.append(" "+String.valueOf(n));
 				}
+				throw new NegativeNumberException(s.toString());
 			}
-			return 0;
+			
+			int sum=nums.stream().reduce(0, (a,b)->a+b);
+			return sum;
 //			System.out.println(delimiter);
 //			return 0;
 		}
