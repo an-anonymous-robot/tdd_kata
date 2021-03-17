@@ -5,9 +5,15 @@ import java.util.stream.Collectors;
 
 public class StringCalculator {
 	public static void main(String[] args) {
-		System.out.println(Add("//;\n1;3,2"));
+		try {
+		System.out.println(Add("//;\n1;3,-2"));
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
-	static int Add(String numbers) {
+	static int Add(String numbers) throws NegativeNumberException {
+		
 		if("".equals(numbers)) {
 			return 0;
 		}
@@ -16,12 +22,28 @@ public class StringCalculator {
 			String delimiter=delimiter_temp.concat("|\\n|,");
 			String new_str=numbers.substring(numbers.indexOf("\n")+1);
 			List<String> arr=List.of(new_str.split(delimiter));
-			int sum=arr.stream()
+			List<Integer> nums=arr.stream()
 			   .map(a->Integer.parseInt(a))
-			   .reduce(0,(a,b)->a+b);
-			return sum;
+			   .collect(Collectors.toList());
+			for(int i:nums) {
+				if(i<0) {
+				String s="negatives not allowed!";
+				s=s.concat(" "+String.valueOf(i));
+				throw new NegativeNumberException(s);
+				}
+			}
+			return 0;
 //			System.out.println(delimiter);
 //			return 0;
+		}
+		
+	}
+	
+	static class NegativeNumberException extends Exception{
+		NegativeNumberException(String s){
+			
+			
+			super(s);
 		}
 	}
 
