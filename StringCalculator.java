@@ -7,7 +7,7 @@ public class StringCalculator {
 	static int count=0;
 	public static void main(String[] args) {
 		try {
-		System.out.println(Add("//;\n1;-3,-2"));
+		System.out.println(Add("//;\n1;2,1001"));
 		System.out.println(GetCalledCount());
 		}
 		catch(Exception e) {
@@ -31,6 +31,7 @@ public class StringCalculator {
 			
 			List<Integer> nums=arr.stream()
 			   .map(a->Integer.parseInt(a))
+			   .filter(a->a<=1000)
 			   .collect(Collectors.toList());
 			
 			List<Integer> negNums=nums.stream()
