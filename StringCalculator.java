@@ -4,16 +4,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
+	static int count=0;
 	public static void main(String[] args) {
 		try {
 		System.out.println(Add("//;\n1;-3,-2"));
+		System.out.println(GetCalledCount());
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
+	 public static int GetCalledCount() {
+		 return count;
+	 }
+	 
 	static int Add(String numbers) throws NegativeNumberException {
-		
+		count++;
 		if("".equals(numbers)) {
 			return 0;
 		}
